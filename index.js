@@ -1,4 +1,6 @@
-import { getContext, eventSource, event_types } from "../../../extensions.js";
+// ИСПРАВЛЕННЫЕ ИМПОРТЫ (теперь они правильные)
+import { getContext } from "../../../extensions.js";
+import { eventSource, event_types } from "../../../../script.js";
 
 const extensionName = "love-clinic";
 let currentKinks = [];
@@ -11,7 +13,6 @@ function extractKinks(character) {
     if (character.scenario) text += character.scenario + "\n";
     if (character.first_mes) text += character.first_mes + "\n";
 
-    // Ищем ключевые слова
     const kinkRegex = /(?:kinks?|fetishes?|turn-ons?|предпочтения|фетиши|кинки|извращения)\s*[:\-]\s*(.+)/gi;
     let matches;
     let kinks = [];
@@ -19,12 +20,11 @@ function extractKinks(character) {
     while ((matches = kinkRegex.exec(text)) !== null) {
         const parts = matches[1].split(/[,;\n]/);
         parts.forEach(p => {
-            const cleaned = p.trim().replace(/^[-*•\s]+/, ''); // Убираем маркеры списка
+            const cleaned = p.trim().replace(/^[-*•\s]+/, '');
             if (cleaned.length > 2) kinks.push(cleaned);
         });
     }
 
-    // Убираем дубликаты
     kinks = [...new Set(kinks)];
 
     if (kinks.length === 0) {
@@ -35,8 +35,7 @@ function extractKinks(character) {
 
 // 2. Создание интерфейса
 function createUI() {
-    // Если уже создано, не создаем заново
-    if (document.getElementById('lc-float-btn')) return;
+    if (document.getElementById('lc-float-btn')) return; // Уже создано
 
     const uiHtml = `
         <div id="lc-float-btn" title="Love Clinic">🩺</div>
@@ -52,7 +51,6 @@ function createUI() {
     `;
     $('body').append(uiHtml);
 
-    // Обработчики событий
     $('#lc-float-btn').on('click', openCard);
     $('#lc-close-btn').on('click', closeCard);
     $('#lc-overlay').on('click', closeCard);
@@ -65,7 +63,6 @@ function createUI() {
             $('#send_textarea').val(`🎲 **Рулетка кинков:** Выпало: *${randomKink}*`);
             $('#send_but').click();
 
-            // Подсвечиваем в списке
             $('.lc-item').css('background', 'transparent');
             $(`.lc-item:contains('${randomKink}')`).css('background', '#ffeb3b');
         }
@@ -99,27 +96,38 @@ function closeCard() {
     $('#lc-card').fadeOut(200);
 }
 
-// 3. Инициализация при загрузке
+// 3. Инициализация (БЕЗОПАСНАЯ)
 jQuery(async () => {
-    createUI();
+    // Пытаемся создать кнопку сразу при загрузке
+    setTimeout(createUI, 1000);
 
-    // Добавляем блок в настройки расширений (меню "Кубики")
-    eventSource.on(event_types.APP_READY, () => {
-        const settingsHtml = `
-        <div class="love-clinic-settings">
-            <div class="inline-drawer">
-                <div class="inline-drawer-toggle inline-drawer-header">
-                    <b>Love Clinic (Kink Reminder)</b>
-                    <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+    // Пытаемся добавить блок в настройки
+    const addSettingsBlock = () => {
+        if ($('#extensions_settings').length > 0 && $('.love-clinic-settings').length === 0) {
+            const settingsHtml = `
+            <div class="love-clinic-settings">
+                <div class="inline-drawer">
+                    <div class="inline-drawer-toggle inline-drawer-header">
+                        <b>Love Clinic (Kink Reminder)</b>
+                        <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+                    </div>
+                    <div class="inline-drawer-content">
+                        <p>Вытаскивает фетиши из карты персонажа и позволяет выбрать случайный.</p>
+                        <button id="lc-open-settings-btn" class="menu_button">Открыть Медкарту</button>
+                    </div>
                 </div>
-                <div class="inline-drawer-content">
-                    <p>Вытаскивает фетиши из карты персонажа и позволяет выбрать случайный.</p>
-                    <button id="lc-open-settings-btn" class="menu_button">Открыть Медкарту</button>
-                </div>
-            </div>
-        </div>`;
-        
-        $('#extensions_settings').append(settingsHtml);
-        $('#lc-open-settings-btn').on('click', openCard);
-    });
+            </div>`;
+            
+            $('#extensions_settings').append(settingsHtml);
+            $('#lc-open-settings-btn').on('click', openCard);
+        }
+    };
+
+    // Пытаемся добавить блок каждую секунду в течение 10 секунд (на случай, если Таверна грузится медленно)
+    let attempts = 0;
+    const interval = setInterval(() => {
+        addSettingsBlock();
+        attempts++;
+        if (attempts > 10) clearInterval(interval);
+    }, 1000);
 });
