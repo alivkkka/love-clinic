@@ -1,0 +1,110 @@
+/* Плавающая кнопка */
+#lc-float-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #ff69b4, #d6336c);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(214, 51, 108, 0.5);
+    z-index: 99999;
+    transition: transform 0.2s;
+    border: 2px solid #fff;
+}
+
+#lc-float-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Затемнение фона */
+#lc-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99998;
+    display: none;
+}
+
+/* Медицинская карточка */
+#lc-card {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    background: #fff0f5;
+    border: 2px solid #ffb6c1;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 99999;
+    font-family: 'Courier New', Courier, monospace;
+    color: #333;
+    display: none;
+}
+
+#lc-card h2 {
+    text-align: center;
+    color: #d6336c;
+    border-bottom: 2px dashed #ffb6c1;
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.lc-list {
+    max-height: 250px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ffb6c1;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.lc-item {
+    padding: 6px;
+    border-bottom: 1px solid #ffe4e1;
+    font-size: 14px;
+}
+
+.lc-item:last-child {
+    border-bottom: none;
+}
+
+.lc-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.lc-buttons button {
+    flex: 1;
+    background: #ff69b4;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.lc-buttons button:hover {
+    background: #d6336c;
+}
+
+.lc-buttons button.close-btn {
+    background: #999;
+}
+
+.lc-buttons button.close-btn:hover {
+    background: #666;
+}
