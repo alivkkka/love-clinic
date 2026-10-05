@@ -1,131 +1,141 @@
-/* Плавающая кнопка */
+/* Маленькая перетаскиваемая кнопка */
 #lc-float-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 55px;
-    height: 55px;
+    top: 100px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
     background: linear-gradient(135deg, #ff69b4, #d6336c);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 22px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(214, 51, 108, 0.5);
+    box-shadow: 0 4px 10px rgba(214, 51, 108, 0.5);
     z-index: 99999;
-    transition: transform 0.2s;
     border: 2px solid #fff;
+    touch-action: none;
+    user-select: none;
 }
 
-#lc-float-btn:hover {
-    transform: scale(1.1);
-}
-
-/* Затемнение фона */
 #lc-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     z-index: 99998;
     display: none;
 }
 
-/* Медицинская карточка */
+/* Карточка ID */
 #lc-card {
     position: fixed;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 420px;
-    background: #fff0f5;
-    border: 2px solid #ffb6c1;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 92%;
+    max-width: 400px;
+    background: linear-gradient(145deg, #fff0f5, #ffe4e1);
+    border: 3px solid #ffb6c1;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
     z-index: 99999;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
     display: none;
 }
 
-/* Шапка с аватаром и именем */
 .lc-header {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    padding-bottom: 10px;
     border-bottom: 2px dashed #ffb6c1;
+    padding-bottom: 10px;
+}
+
+.lc-avatar-container {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid #ff69b4;
+    margin-right: 15px;
+    flex-shrink: 0;
+    background: #fff;
 }
 
 #lc-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 3px solid #ff69b4;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    margin-right: 15px;
 }
 
 .lc-header-info h2 {
     margin: 0 0 5px 0;
     color: #d6336c;
     font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.lc-header-info p {
-    margin: 0;
-    font-size: 12px;
+.lc-status {
+    font-size: 11px;
     color: #888;
+    background: #fff;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    border: 1px solid #ffb6c1;
+}
+
+.lc-section { margin-bottom: 15px; }
+.lc-section-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #d6336c;
+    margin-bottom: 5px;
 }
 
 .lc-list {
-    max-height: 200px;
+    max-height: 180px;
     overflow-y: auto;
     background: #fff;
     border: 1px solid #ffb6c1;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .lc-item {
-    padding: 6px;
+    padding: 5px 8px;
     border-bottom: 1px solid #ffe4e1;
-    font-size: 14px;
+    font-size: 13px;
 }
+.lc-item:last-child { border-bottom: none; }
 
-.lc-item:last-child {
-    border-bottom: none;
+#lc-manual-kinks {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ffb6c1;
+    border-radius: 8px;
+    font-size: 13px;
+    box-sizing: border-box;
+    outline: none;
+    margin-bottom: 15px;
 }
+#lc-manual-kinks:focus { border-color: #d6336c; }
 
-.lc-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-}
-
+.lc-buttons { display: flex; gap: 8px; }
 .lc-buttons button {
     flex: 1;
     background: #ff69b4;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 10px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
 }
-
-.lc-buttons button:hover {
-    background: #d6336c;
-}
-
-.lc-buttons button.close-btn {
-    background: #999;
-}
-
-.lc-buttons button.close-btn:hover {
-    background: #666;
-}
+.lc-buttons button.close-btn { background: #999; flex: 0.5; }
