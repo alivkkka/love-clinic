@@ -1,0 +1,12 @@
+{
+    "display_name": "Love Clinic",
+    "loading_order": 1,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "alivkkka",
+    "version": "1.0.0",
+    "homePage": "https://github.com/alivkkka/love-clinic",
+    "type": "extension"
+}
